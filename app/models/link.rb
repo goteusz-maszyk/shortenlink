@@ -1,4 +1,3 @@
 class Link < ApplicationRecord
-    def test
-    end
+  belongs_to :user
 end
