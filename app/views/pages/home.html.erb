@@ -1,1 +1,26 @@
 <h3>ShortenLink</h3>
+<% if user_signed_in? %>
+<h4>Twoje Linki</h4>
+<% if @my_links.present? %>
+  <ul class='list-group'>
+    <% @my_links.each do |link| %>
+      <li class='list-group-item d-flex justify-content-between align-items-center'>
+        Link Oryginalny: <%= link_to link.org_link, link.org_link %> |
+        Kod skróconego linku: <%= link_to link.shlink, link.shlink %>
+        <span><%= link_to "Usuń",'', method: :delete, data: { toggle: 'modal', target: '#del-lnk', href: link_url(id: link.id) } %></span>
+      </li>
+    <% end %>
+  </ul>
+<% end %>
+<% end %>
+
+<%= form_with url: "/links", method: "post", local: true do %>
+  <div class='border p-4 mb-4'>
+    <h4>Skróć link!</h4>
+    <div class='form-group row col-sm-10'>
+      <%= text_field_tag :"link[org_link]", @link.org_link, class: 'form-control', placeholder: 'Tu wpisz swój link...' %>
+    </div>
+    <%= submit_tag("Skróć!", class: 'btn btn-primary') %>
+  </div>
+<% end %>
+<%= render partial: "/shared/modal_link", locals: {method: "delete", modal_id: "del-lnk", title: "Na pewno?", body: "Próbujesz usunąć link."} %>

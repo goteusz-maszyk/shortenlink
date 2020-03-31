@@ -42,7 +42,7 @@
 <% end %>
 
 <h3>Cancel my account</h3>
+<%= link_to 'Usuń konto', '', class: "btn btn-outline-danger", data: { toggle: 'modal', target: '#del-account', href: cancel_user_registration_path } %>
+<%= button_to "Usuń moje konto", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete %>
 
-<p>Unhappy? <%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete %></p>
-
-<%= link_to "Back", :back %>
+<%= render partial: "/shared/modal", locals: {method: "delete", modal_id: "del-account", title: "Na pewno?", body: "Usuniętego konta nie można usunąć.", href: user_registration_path} %>

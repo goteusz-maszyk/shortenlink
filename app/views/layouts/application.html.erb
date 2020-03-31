@@ -35,17 +35,25 @@
         <%= link_to "Wyloguj", destroy_user_session_path, method: :delete, :class => 'navbar-link'  %>
       <% end %>
     </p>
-    <% if notice %>
+    <% if notice || flash[:notice] %>
       <p class="alert alert-success">
-        <%= notice %>
+        <%= flash[:notice] ? flash[:notice] : notice %>
         <button type="button" class="close" data-dismiss="alert">
           <span>&times;</span>
         </button>
       </p>
     <% end %>
-    <% if alert %>
+    <% if alert || flash[:alert] %>
       <p class="alert alert-danger">
-        <%= alert %>
+        <%= flash[:alert] ? flash[:alert] : alert %>
+        <button type="button" class="close" data-dismiss="alert">
+          <span>&times;</span>
+        </button>
+      </p>
+    <% end %>
+    <% if flash[:info] %>
+      <p class="alert alert-info">
+        <%= flash[:info] %>
         <button type="button" class="close" data-dismiss="alert">
           <span>&times;</span>
         </button>
