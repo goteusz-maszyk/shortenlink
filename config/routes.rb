@@ -5,5 +5,5 @@ Rails.application.routes.draw do
   get '/:token/info', to: 'links#show', as: 'link_info'
   post '/links', to: 'links#create'
   root to: 'pages#home'
-  resources :links, only: [:destroy]
+  delete '/:id', to: 'links#destroy', as: 'link'
 end
