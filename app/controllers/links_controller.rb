@@ -1,5 +1,7 @@
 class LinksController < ApplicationController
+  skip_before_action :authenticate_user!
   def destroy
+    authenticate_user!
     link = Link.find_by_id(params[:id])
     link.destroy
     redirect_to root_url
@@ -21,6 +23,7 @@ class LinksController < ApplicationController
     end
   end
   def create
+    authenticate_user!
     link = Link.new(org_link: params[:link][:org_link], shlink: Devise.friendly_token(6), user_id: current_user.id )
     if link.save
       redirect_to link_info_path(token: link.shlink), flash: { info: "Wygenerowano" }
