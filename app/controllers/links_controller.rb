@@ -5,6 +5,8 @@ class LinksController < ApplicationController
     link = Link.find_by_id(params[:id])
     link.destroy
     redirect_to root_url
+  rescue ActiveRecord::InvalidForeignKey
+    redirect_to root_url, flash: { alert: "Nie można usunąć" }
   end
   def run
     if Link.find_by_shlink(params[:token])

@@ -25,8 +25,8 @@ en:
       confirmed: 'Twoje konto zostało aktywowane. Jesteś już zalogowany.'
     registrations:
       signed_up: 'Witamy w ShortenLink!'
-      updated: 'Twoje konto zostało pomyślnie zaktualizowane.'
-      destroyed: 'Do zobaczenia! Twoje konto zostało usunięte. Mamy nadzieję, że spotkamy się jeszcze kiedyś!'
+      updated: 'Twoje konto zostało zaktualizowane.'
+      destroyed: 'Do zobaczenia! Twoje konto zostało usunięte.'
     unlocks:
       send_instructions: 'Wkrótce powinieneś otrzymać email z instrukcją jak odblokować swoje konto.'
       unlocked: 'Twoje konto zostało odblokowane. Jesteś już zalogowany.'

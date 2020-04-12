@@ -3,7 +3,7 @@ class CreateShortenlink < ActiveRecord::Migration[6.0]
     create_table :links do |t|
       t.string :org_link, unique: true
       t.string :shlink, unique: true
-      t.references :user, index: true
+      t.references :user, index: true, foreign_key: true
       
       t.timestamps
     end

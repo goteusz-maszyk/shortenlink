@@ -25,9 +25,17 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # end
 
   # DELETE /resource
-  # def destroy
-  #   super
-  # end
+  def destroy
+    links = Link.all
+    links.each do |link|
+      if link.user_id == current_user.id
+        link.destroy
+      end
+    end
+    super
+  rescue ActiveRecord::InvalidForeignKey
+    redirect_to root_url, flash: { alert: "Najpierw usuń wszystkie skrócone linki" }
+  end
 
   # GET /resource/cancel
   # Forces the session data which is usually expired after sign

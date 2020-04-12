@@ -1,4 +1,4 @@
-<h2>Log in</h2>
+<h2>Zaloguj się</h2>
 
 <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
 
@@ -13,7 +13,7 @@
     <div class="form-group form-check">
       <% if devise_mapping.rememberable? %>
         <%= f.check_box :remember_me, class:'form-check-input' %>
-        <%= f.label :remember_me, class:'form-check-label' %>
+        <%= f.label :remember_me, "Zapamiętaj mnie!", class:'form-check-label' %>
       <% end %>
     </div>
   </div>
