@@ -13,3 +13,7 @@
  *= require_tree .
  *= require_self
  */
+
+#link_password {
+  margin-right: 1rem!important;
+}

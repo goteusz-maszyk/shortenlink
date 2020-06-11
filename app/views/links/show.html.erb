@@ -1,0 +1,7 @@
+<h6>Tytuł: <%= @link.title.blank? ? "<i>Brak</i>".html_safe : @link.title %></h6>
+<h6>Oryginalny link: <%= link_to @link.org_link, @link.org_link %></h6>
+<h6>Skrócony link: <%= link_to root_url+@link.shlink, root_url+@link.shlink %></h6>
+<% if current_user.pro? %>
+<h6>Ten link <%= t(!@link.encrypted_password.blank?) %>wymaga hasła</h6>
+<% end %>
+<%= link_to("Edytuj", edit_link_url(id: @link.shlink)) %>

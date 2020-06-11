@@ -3,9 +3,13 @@ Rails.application.routes.draw do
     registrations: 'users/registrations'
   }
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
-  get '/:token', to: 'links#run'
-  get '/:token/info', to: 'links#show', as: 'link_info'
-  post '/links', to: 'links#create'
   root to: 'pages#home'
-  delete '/:id', to: 'links#destroy', as: 'link'
+
+  resources :links do
+    member do
+      patch :password_check, as: 'check_password'
+    end
+  end
+  get '/:token', to: 'links#run', as: 'run_link'
+  get '/:id/edit', to: redirect('/links/%{id}/edit')
 end

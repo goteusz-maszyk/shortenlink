@@ -1,0 +1,14 @@
+<%= form_with url: link_url(id: @link.shlink), method: "put", local: true do %>
+  <div class='border p-4 mb-4'>
+    <h4>Edytujesz link <%= !@link.title.blank? ? '<i>"'.html_safe + @link.title + '"</i>'.html_safe : ("do #{@link.org_link[0..45]}#{'...' if @link.org_link.length > 45}#{@link.org_link[(@link.org_link.length-5)...(@link.org_link.length-1)] if @link.org_link.length > 50}") %></h4>
+    <div class='form-group row col-sm-10'>
+      <%= text_field_tag :"link[title]", @link.title, class: 'form-control', placeholder: 'Tytuł linku' %>
+    </div>
+    <% if current_user.pro? %>
+    <div class='form-group row col-sm-10'>
+      <%= text_field_tag :"link[password]", Devise.friendly_token(5), class: 'form-control', placeholder: 'Hasło do zabezpieczenia linku (zostaw puste, jeśli chcesz usunąć lub nie dodawać)' %>
+    </div>
+    <% end %>
+    <%= submit_tag("Zapisz", class: 'btn btn-primary') %>
+  </div>
+<% end %>

@@ -34,7 +34,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
     end
     super
   rescue ActiveRecord::InvalidForeignKey
-    redirect_to root_url, flash: { alert: "Najpierw usuń wszystkie skrócone linki" }
+    redirect_to root_url, alert: "Najpierw usuń wszystkie skrócone linki"
   end
 
   # GET /resource/cancel

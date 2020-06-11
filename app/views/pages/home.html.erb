@@ -1,25 +1,64 @@
 <h3>ShortenLink</h3>
-<% if user_signed_in? %>
 <h4>Twoje Linki</h4>
-<% if @my_links.present? %>
-  <ul class='list-group'>
-    <% @my_links.each do |link| %>
-      <li class='list-group-item d-flex justify-content-between align-items-center'>
-        Link Oryginalny: <%= link_to link.org_link, link.org_link %> |
-        Kod skróconego linku: <%= link_to link.shlink, link.shlink %>
-        <span><%= link_to "Usuń",link_url(id: link.id), method: :delete %></span>
-      </li>
-    <% end %>
-  </ul>
-<% end %>
-<% end %>
 
-<%= form_with url: "/links", method: "post", local: true do %>
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th scope="col">Tytuł</th>
+      <th scope="col">Link oryginalny</th>
+      <th scope="col">Kod skróconego linku</th>
+      <th scope="col">Usuń</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @my_links.each do |link| %>
+    <tr>
+      <th scope="row"><%= link.title.blank? ? "<i>Brak</i>".html_safe : link.title %></th>
+      <td><%= link_to(("#{link.org_link[0..45]}#{'...' if link.org_link.length > 45}#{link.org_link[(link.org_link.length-5)...(link.org_link.length-1)] if link.org_link.length > 50}"), link.org_link) %></td>
+      <td><%= link_to link.shlink, link_url(id: link.shlink) %></td>
+      <td><%= link_to "Usuń",link_url(id: link.shlink), method: :delete %></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= form_with url: links_url, method: "post", local: true, id: "newLink" do %>
   <div class='border p-4 mb-4'>
     <h4>Skróć link!</h4>
     <div class='form-group row col-sm-10'>
+      <%= text_field_tag :"link[title]", @link.title, class: 'form-control', placeholder: 'Tytuł linku...' %>
+    </div>
+    <div class='form-group row col-sm-10'>
       <%= text_field_tag :"link[org_link]", @link.org_link, class: 'form-control', placeholder: 'Tu wpisz swój link...' %>
     </div>
+    <% if current_user.pro? %>
+    <div class='form-inline mb-2'>
+      <%= text_field_tag :"link[password]", "", class: 'form-control', placeholder: 'Hasło do zabezpieczenia linku', style: "display: none;" %>
+      <div class="custom-control custom-checkbox my-1 mr-sm-2">
+        <input onchange="showHidePasswordCreate(this)" type="checkbox" class="custom-control-input" id="customControlInline">
+        <label class="custom-control-label" for="customControlInline">Używaj hasła</label>
+      </div>
+    </div>
+    <% end %>
     <%= submit_tag("Skróć!", class: 'btn btn-primary') %>
   </div>
+<% end %>
+
+<% if current_user.pro? %>
+
+<script type="text/javascript">
+  <%= "let creatingPasswordInputVal = '".html_safe + Devise.friendly_token(6) + "'".html_safe %>
+  const creatingPasswordInput = document.forms.newLink.link_password
+  const showHidePasswordCreate = function(checkbox) {
+    if(checkbox.checked) {
+      creatingPasswordInput.value = creatingPasswordInputVal
+      $('#link_password').show()
+    } else {
+      creatingPasswordInputVal = creatingPasswordInput.value
+      creatingPasswordInput.value = ""
+      $('#link_password').hide()
+    }
+  }
+</script>
+
 <% end %>
